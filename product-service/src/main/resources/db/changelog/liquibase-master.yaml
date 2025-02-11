@@ -1,0 +1,4 @@
+databaseChangeLog:
+
+  - include:
+      file: db/changelog/202501250900/create-products-table.yaml

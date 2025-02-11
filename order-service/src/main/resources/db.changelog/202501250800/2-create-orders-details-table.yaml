@@ -1,0 +1,46 @@
+databaseChangeLog:
+  - changeSet:
+      id: v1-create-orders-details-table
+      author: Vadim Savchuk
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            tableExists:
+              tableName: details
+      changes:
+        - createTable:
+            tableName: details
+            columns:
+              - column:
+                  name: detail_id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: product_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: product_code
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: quantity
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: price
+                  type: real
+                  constraints:
+                    nullable: false
+              - column:
+                  name: order_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    foreignKeyName: details-orders-FK
+                    referencedTableName: orders
+                    referencedColumnNames: order_id

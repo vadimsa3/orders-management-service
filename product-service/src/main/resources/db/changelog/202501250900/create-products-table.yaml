@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: v1-create-products-table
+      author: Vadim Savchuk
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            tableExists:
+              tableName: products
+      changes:
+        - createTable:
+            tableName: products
+            columns:
+              - column:
+                  name: product_code
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: product_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: price
+                  type: real
+                  constraints:
+                    nullable: false

@@ -1,0 +1,97 @@
+services:
+  number-generate-service:
+    build:
+      context: ./number-generate-service
+    ports:
+      - "9191:9191"
+    depends_on:
+      - redis
+
+  product-service:
+    build:
+      context: ./product-service
+    volumes:
+      - ~/.m2/repository:/home/gradle/.m2/repository
+    ports:
+      - "9393:9393"
+    environment:
+      - POSTGRES_DB=product_service_db
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+    depends_on:
+      - postgres_product
+
+  order-service:
+    build:
+      context: ./order-service
+    volumes:
+      - ~/.m2/repository:/home/gradle/.m2/repository
+    ports:
+      - "9898:9898"
+    environment:
+      - POSTGRES_DB=order_service_db
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+    depends_on:
+      - postgres_order
+
+  redis:
+    image: redis:latest
+    container_name: redis-container
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./data:/data
+
+  postgres_product:
+    image: postgres:16-alpine
+    container_name: postgres_product_cont
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: product_service_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_product_data:/var/lib/postgresql/data
+
+  postgres_order:
+    image: postgres:16-alpine
+    container_name: postgres_order_cont
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: order_service_db
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_order_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_product_data:
+  postgres_order_data:
+
+#  postgres:
+#    image: postgres:16.1-alpine3.19
+#    container_name: psql-container
+#    ports:
+#      - "5001:5432"
+#    environment:
+#      POSTGRES_DATABASES: product_service_db,order_service_db
+#      POSTGRES_PASSWORD: postgres
+#      POSTGRES_USER: postgres
+#    volumes:
+#      - postgres_data:/var/lib/postgresql/data
+
+#volumes:
+#  postgres_data:
+
+
+#  app:
+#    build: src
+#    container_name: 'order-app'
+#    ports:
+#      - "9898:9898"
+#    depends_on:
+#      - database
+

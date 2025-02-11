@@ -1,0 +1,42 @@
+server:
+  port: 9898
+
+spring:
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5434/order_service_db
+    username: postgres
+    password: postgres
+
+  liquibase:
+    change-log: db.changelog/liquibase-master.yaml
+    enabled: true
+
+  jpa:
+    open-in-view: false
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: some_email@gmail.com
+    password: kipx yngf hdlq nbnn
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          ssl:
+            trust: "*"
+    test-connection: false
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui
+
+number-generator-service-params:
+  url-generator-service: http://localhost:9191/api/number-generate-service/numbers/generate
+
+product-service-params:
+  url-product-service-for-product: http://localhost:9393/api/product-service/products/

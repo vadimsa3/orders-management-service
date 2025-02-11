@@ -1,0 +1,10 @@
+services:
+  database:
+    container_name: postgres_order_cont
+    image: postgres:16.1-alpine3.19
+    environment:
+      POSTGRES_DB: order_service_db
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+    ports:
+      - "5434:5432"

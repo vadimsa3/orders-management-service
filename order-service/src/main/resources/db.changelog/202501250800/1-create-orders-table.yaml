@@ -1,0 +1,51 @@
+databaseChangeLog:
+  - changeSet:
+      id: v1-create-orders-table
+      author: Vadim Savchuk
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            tableExists:
+              tableName: orders
+      changes:
+        - createTable:
+            tableName: orders
+            columns:
+              - column:
+                  name: order_id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: order_number
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: total_amount
+                  type: real
+                  constraints:
+                    nullable: false
+              - column:
+                  name: order_date
+                  type: date
+              - column:
+                  name: client_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: delivery_address
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: payment_type
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: delivery_type
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
